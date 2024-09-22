@@ -41,6 +41,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   if (value.length <5) {
                     return "title must be longer than 3 letters";
                   }
+                  if (value.length > 20){
+                      return "title is too long";
+                  }
                   return null;
                 },
                 decoration: const InputDecoration(
