@@ -6,12 +6,17 @@ class AddTaskDialog extends StatefulWidget {
       required this.taskTitleController,
       required this.taskSubtitleController,
       required this.formkey,
-      required this.ontap});
+      required this.ontap,
+      this.textOnButton ="Add", this.textOnDia="Add your Task"
+      });
 
   final TextEditingController taskTitleController;
   final TextEditingController taskSubtitleController;
   final GlobalKey<FormState> formkey;
   final Function ontap;
+  final String textOnButton ;
+  final String textOnDia;
+
 
   @override
   State<AddTaskDialog> createState() => _AddTaskDialogState();
@@ -30,7 +35,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Add your Task"),
+              Text(widget.textOnDia),
               const SizedBox(height: 16,),
               TextFormField(
                 controller: widget.taskTitleController,
@@ -80,7 +85,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                           widget.ontap();
                         }
                       },
-                      child: const Text("Add"))
+                      child:  Text(widget.textOnButton))
                 ],
               )
             ],

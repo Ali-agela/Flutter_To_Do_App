@@ -28,14 +28,14 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
             Text(
-              widget.taskModel.subtitle ?? "",
+              widget.taskModel.subTitle ?? "",
               style: const TextStyle(fontSize: 26, fontWeight: FontWeight.normal),
             ),
             Icon(widget.taskModel.status ? Icons.check : Icons.cancel_outlined,
                 size: 200,
                 color: widget.taskModel.status ? Colors.green : Colors.red),
             Text(
-                "Created At : ${widget.taskModel.createdat.toString().substring(0, 10).replaceAll("-", "/")}",
+                "Created At : ${widget.taskModel.createdAt.toString().substring(0, 10).replaceAll("-", "/")}",
                 style: const TextStyle(fontSize: 26, fontWeight: FontWeight.normal),    
             )
           ],

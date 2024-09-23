@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_app/models/task_models.dart';
 import 'package:flutter_to_do_app/screens/task_deatails_screen.dart';
+import 'package:flutter_to_do_app/widgets/dialogs/addtaddialog.dart';
 import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart';
 
@@ -9,10 +10,12 @@ class TaskCard extends StatelessWidget {
       {super.key,
       required this.taskModel,
       required this.onTapForCheck,
-      required this.onTapForDelete});
+      required this.onTapForDelete, required this.onTapForEdite});
   final TaskModel taskModel;
   final Function onTapForCheck;
   final Function onTapForDelete;
+  final Function onTapForEdite;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +42,7 @@ class TaskCard extends StatelessWidget {
                       style: TaskCartTextStyle(18),
                     ),
                     Text(
-                      taskModel.subtitle ?? "",
+                      taskModel.subTitle ?? "",
                       style: TaskCartTextStyle(14),
                     ),
                     Text(
@@ -51,6 +54,11 @@ class TaskCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
+                    IconButton(
+                        onPressed: (){ 
+                          onTapForEdite();
+                          },
+                          icon: Icon(Icons.edit)),
                     IconButton(
                         onPressed: () {
                           onTapForDelete();
@@ -82,9 +90,9 @@ TextStyle TaskCartTextStyle(double fontSize,
 String TaskCardFormatDate(TaskModel taskmodel) {
   if (taskmodel.status) {
     return DateFormat("EEE-dd-MMM-yyyy")
-        .format(DateTime.parse(taskmodel.createdat.toIso8601String()))
+        .format(DateTime.parse(taskmodel.createdAt.toIso8601String()))
         .replaceAll("-", ",");
   } else {
-    return format(taskmodel.createdat);
+    return format(taskmodel.createdAt);
   }
 }
