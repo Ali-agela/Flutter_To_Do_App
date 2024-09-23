@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_to_do_app/models/task_models.dart';
+import 'package:flutter_to_do_app/providers/dark_mode_provider.dart';
 import 'package:flutter_to_do_app/screens/task_deatails_screen.dart';
 import 'package:flutter_to_do_app/widgets/dialogs/addtaddialog.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart';
 
 class TaskCard extends StatelessWidget {
@@ -19,72 +21,74 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder:(context) => TaskDetailsScreen(taskModel: taskModel)));
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.blue.withOpacity(0.2)),
+    return Consumer<DarkModeProvider>(
+      builder: (context,darkModeProvider,_) {
+        return GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder:(context) => TaskDetailsScreen(taskModel: taskModel)));
+          },
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.symmetric(vertical: 12.0),
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: darkModeProvider.isDark?Colors.white :Colors.blue.withOpacity(0.2)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      taskModel.title,
-                      style: TaskCartTextStyle(18),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          taskModel.title,
+                          style: TaskCartTextStyle(18, darkModeProvider),
+                        ),
+                        Text(
+                          taskModel.subTitle ?? "",
+                          style: TaskCartTextStyle(14, darkModeProvider),),
+                        Text(
+                          TaskCardFormatDate(taskModel),
+                          style: TaskCartTextStyle(13,darkModeProvider),
+                        )
+                      ],
                     ),
-                    Text(
-                      taskModel.subTitle ?? "",
-                      style: TaskCartTextStyle(14),
-                    ),
-                    Text(
-                      TaskCardFormatDate(taskModel),
-                      style: TaskCartTextStyle(13,
-                          fontColor: Colors.blueGrey.withOpacity(0.5)),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: (){ 
+                              onTapForEdite();
+                              },
+                              icon: Icon(Icons.edit,color: Colors.yellow[400],)),
+                        IconButton(
+                            onPressed: () {
+                              onTapForDelete();
+                            },
+                            icon: const Icon(Icons.delete,color: Colors.red,)),
+                        Checkbox(
+                            value: taskModel.status,
+                            onChanged: (check) {
+                              onTapForCheck();
+                            })
+                      ],
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                        onPressed: (){ 
-                          onTapForEdite();
-                          },
-                          icon: Icon(Icons.edit)),
-                    IconButton(
-                        onPressed: () {
-                          onTapForDelete();
-                        },
-                        icon: const Icon(Icons.delete)),
-                    Checkbox(
-                        value: taskModel.status,
-                        onChanged: (check) {
-                          onTapForCheck();
-                        })
-                  ],
-                )
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }
 
-TextStyle TaskCartTextStyle(double fontSize,
-    {FontWeight fontWeight = FontWeight.bold,
-    Color fontColor = Colors.blueGrey}) {
+TextStyle TaskCartTextStyle(double fontSize,DarkModeProvider darkModeProvider,
+    {FontWeight fontWeight = FontWeight.bold,}) {
   return TextStyle(
-      fontSize: fontSize, fontWeight: fontWeight, color: fontColor);
+      fontSize: fontSize, fontWeight: fontWeight,
+      color: darkModeProvider.isDark?Colors.black:Colors.blueGrey);
 }
 
 String TaskCardFormatDate(TaskModel taskmodel) {
