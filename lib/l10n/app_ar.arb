@@ -1,0 +1,20 @@
+{
+    "hello": "مرحباً",
+    "add": "إضافة",
+    "darkmode": "الوضع الليلي",
+    "lightmode": "الوضع النهاري",
+    "taskdetails": "تفاصيل المهمة",
+    "entertaskname": "أدخل اسم المهمة",
+    "entertasksubtitle": "أدخل وصف المهمة",
+    "cancel": "إلغاء",
+    "ok": "موفق",
+    "waiting": "قيد الإنتظار",
+    "completed": "مكتملة",
+    "title": "عنوان",
+    "subtitle": "عنوان فرعي",
+    "todo": "TO Do",
+    "titleistoolong": " العنوان طويل جدا ",
+    "titlemustbeatleat6letterslong": "على الاقل 6 احرف ",
+    "edit": "تعديل",
+    "edityourtask": "تعديل مهمة "
+}

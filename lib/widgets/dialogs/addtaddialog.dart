@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddTaskDialog extends StatefulWidget {
   AddTaskDialog(
@@ -25,6 +26,7 @@ class AddTaskDialog extends StatefulWidget {
 class _AddTaskDialogState extends State<AddTaskDialog> {
   @override
   Widget build(BuildContext context) {
+    var language = AppLocalizations.of(context)!;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
@@ -41,26 +43,26 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 controller: widget.taskTitleController,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "please enter a title";
+                    return language.entertaskname;
                   }
                   if (value.length <5) {
-                    return "title must be longer than 3 letters";
+                    return language.titlemustbeatleat6letterslong;
                   }
                   if (value.length > 20){
-                      return "title is too long";
+                      return language.titleistoolong;
                   }
                   return null;
                 },
-                decoration: const InputDecoration(
-                  hintText: "Enter the title of the task ",
+                decoration:  InputDecoration(
+                  hintText: language.entertaskname ,
                   border: OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 16,),
               TextFormField(
                 controller: widget.taskSubtitleController,
-                decoration: const InputDecoration(
-                  hintText: "Enter the subtitle of the task ",
+                decoration:  InputDecoration(
+                  hintText: language.entertasksubtitle,
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -69,8 +71,8 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    child: const Text(
-                      "Cancel",
+                    child:  Text(
+                      language.cancel,
                       style: TextStyle(color: Colors.red),
                     ),
                     onPressed: () {

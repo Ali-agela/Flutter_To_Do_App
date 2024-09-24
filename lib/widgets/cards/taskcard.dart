@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_to_do_app/models/task_models.dart';
 import 'package:flutter_to_do_app/providers/dark_mode_provider.dart';
 import 'package:flutter_to_do_app/screens/task_deatails_screen.dart';
-import 'package:flutter_to_do_app/widgets/dialogs/addtaddialog.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class TaskCard extends StatelessWidget {
   TaskCard(
@@ -23,6 +24,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DarkModeProvider>(
       builder: (context,darkModeProvider,_) {
+        var language = AppLocalizations.of(context)!;
         return GestureDetector(
           onTap: (){
             Navigator.push(context, MaterialPageRoute(builder:(context) => TaskDetailsScreen(taskModel: taskModel)));

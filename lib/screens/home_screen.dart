@@ -6,6 +6,8 @@ import 'package:flutter_to_do_app/widgets/cards/taskcard.dart';
 import 'package:flutter_to_do_app/widgets/clickables/draweer_tile.dart';
 import 'package:flutter_to_do_app/widgets/dialogs/addtaddialog.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,8 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
     print(Provider.of<TasksProvider>(context,listen: false).tasks);
     super.initState();
   }
+    
   @override
   Widget build(BuildContext context) {
+    var language = AppLocalizations.of(context)!;
     return Consumer<DarkModeProvider>(
       builder: (context,darkModeProvider,_) {
         return Consumer<TasksProvider>(
@@ -38,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Drawer(
                   child: DraweerTile(
                     icon: darkModeProvider.isDark?Icons.dark_mode:Icons.light_mode,
-                    text: darkModeProvider.isDark?"Light mode ":"Dark mode",
+                    text: darkModeProvider.isDark? language.lightmode:language.darkmode,
                   ),
                 ),
               ),
@@ -49,6 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         context: context,
                         builder: (context) {
                           return AddTaskDialog(
+                            textOnButton: language.add,
+                            textOnDia: language.add,
                               taskTitleController: taskTitleController,
                               taskSubtitleController: subTaskTitleController,
                               formkey: formKey,
@@ -66,15 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                   }),
               appBar: AppBar(
-                title: const Text("ToDo"),
+                title:  Text(language.todo),
               ),
               body:  DefaultTabController(
               length: 2,
               child: Column(
                 children: [
-                  const  TabBar(tabs: [
-                    Tab(text:"Waiting"),
-                    Tab(text: "Completed",)
+                    TabBar(tabs: [
+                    Tab(text: language.waiting   ),
+                    Tab(text: language.completed,)
                   ]),
                   Expanded(child: TabBarView(children: [
                     ListView.builder(
@@ -95,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTapForEdite: (){
                               showDialog(context: context, builder: (context) {
                                 return AddTaskDialog(
-                                  textOnButton: "Edit",
-                                  textOnDia: "Edit your task",
+                                  textOnButton: language.edit,
+                                  textOnDia: language.edityourtask,
                                   taskTitleController: taskTitleController,
                                   taskSubtitleController: subTaskTitleController,
                                   formkey: formKey,
@@ -140,8 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     context: context,
                                     builder: (context) {
                                       return AddTaskDialog(
-                                          textOnButton: "Edit",
-                                          textOnDia: "Edit your task",
+                                          textOnButton:  language.edit,
+                                          textOnDia: language.edityourtask,
                                           taskTitleController: taskTitleController,
                                           taskSubtitleController:
                                               subTaskTitleController,
